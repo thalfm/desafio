@@ -34,6 +34,6 @@ class Funcionario extends Model
 
     public function dependentes()
     {
-        $this->hasMany(FuncionarioDependente::class, 'funcionario_id', 'funcionario_id');
+        return $this->hasMany(FuncionarioDependente::class, 'funcionario_id', 'funcionario_id');
     }
 }

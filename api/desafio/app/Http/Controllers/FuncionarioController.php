@@ -17,12 +17,18 @@ class FuncionarioController extends Controller
 
     public function index()
     {
-        return Funcionario::all();
+        $data = Funcionario::all();
+        return $data
+            ? response()->json(['data' => $data], 200)
+            : response()->json(['msg' => 'Nenhum conteúdo encontrado'], 404);
     }
 
     public function show(int $funcionario_id)
     {
-        return Funcionario::find($funcionario_id);
+        $data = Funcionario::find($funcionario_id);
+        return $data
+            ? response()->json(['data' =>$data], 200)
+            : response()->json(['msg' => 'Nenhum conteúdo encontrado'], 404);
     }
 
     public function store(Request $request)
@@ -38,10 +44,11 @@ class FuncionarioController extends Controller
         $validator = \Validator::make($input, $rules, $messages);
 
         if (!$validator->fails()) {
-            return Funcionario::create($request->all());
+            $funcionario = Funcionario::create($request->all());
+            return response()->json(['data' => $funcionario], 201);
         }
 
-        return $validator->messages()->first();
+        return response()->json(['msg' => $validator->messages()->first()], 400);
     }
 
     public function update(Request $request, int $funcionario_id)
@@ -60,15 +67,16 @@ class FuncionarioController extends Controller
             $funcionario = Funcionario::find($funcionario_id);
             $funcionario->fill($request->all());
             $funcionario->save();
-            return $funcionario;
+            return response()->json(['data' => $funcionario], 200);
         }
 
-        return $validator->messages()->first();
+        return response()->json(['msg' => $validator->messages()->first()], 400);
     }
 
     public function delete($funcionario_id)
     {
         $funcionario = Funcionario::find($funcionario_id);
         $funcionario->delete();
+        return response()->json([], 204);
     }
 }

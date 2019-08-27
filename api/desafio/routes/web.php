@@ -25,8 +25,8 @@ $router->group(['prefix' => 'v1'], function () use($router){
         $router->delete('/{funcionario_id}', 'FuncionarioController@delete');
 
         $router->get('{funcionario_id}/dependente', 'FuncionarioDependentesController@index');
-        $router->get('/{funcionario_id}dependente/{dependente_id}', 'FuncionarioDependentesController@show');
-        $router->post('/{funcionario_id}/dependente}', 'FuncionarioDependentesController@store');
+        $router->get('/{funcionario_id}/dependente/{dependente_id}', 'FuncionarioDependentesController@show');
+        $router->post('/{funcionario_id}/dependente', 'FuncionarioDependentesController@store');
         $router->put('/{funcionario_id}/dependente/{dependente_id}', 'FuncionarioDependentesController@update');
         $router->delete('/{funcionario_id}/dependente/{dependente_id}', 'FuncionarioDependentesController@delete');
     });
