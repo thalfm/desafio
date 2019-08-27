@@ -22,6 +22,18 @@ services:
       - api
     networks:
       - development-network
+  webapp:
+    container_name: webapp
+    image: node-nginx
+    build:
+      dockerfile: ../docker/frontend/Dockerfile
+      context: ../webapp
+    volumes:
+      - ./desafio/dist:/usr/share/nginx/html
+    ports:
+      - "88:80"
+    networks:
+      - development-network
 networks:
   development-network:
     driver: bridge
