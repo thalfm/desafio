@@ -1,0 +1,331 @@
+openapi: 3.0.1
+info:
+    title: DESAFIO
+    description: Esta é a pagina de serviços disponibilizados do desafio da Indra
+    contact:
+        email: thalfm@gmail.com
+    version: 1.0.0
+externalDocs:
+    description: Find out more about Swagger
+    url: 'http://swagger.io'
+servers:
+    - url: 'http://localhost:8000/api'
+tags:
+    - name: Funcionário
+      description: métodos disponíveis para manutenção do funcionário
+    - name: Funcionário Dependentes
+      description: métodos disponíveis para a manutenção de dependentes dos funcionário
+paths:
+    /funcionario:
+        post:
+            tags:
+                - Funcionário
+            summary: Criar novo Funcionário
+            requestBody:
+                description: Dados necessários para criar um funcionário
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/NovaPessoa'
+                required: true
+            responses:
+                '201':
+                    description: successful operation
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RetornoPessoa'
+                '400':
+                    description: Bad request
+                    content: {}
+        get:
+            tags:
+                - Funcionário
+            summary: Busca todas os Funcionários
+            responses:
+                '200':
+                    description: successful operation
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/PessoasPaginado'
+                '400':
+                    description: Bad request
+                    content: {}
+
+    /funcionario/{funcionario_id}:
+        get:
+            tags:
+                - Funcionário
+            summary: Busca apenas um funcionário
+            parameters:
+                - name: funcionario_id
+                  in: path
+                  description: ID do funcionário
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            responses:
+                '200':
+                    description: successful operation
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RetornoPessoa'
+                '400':
+                    description: Bad request
+                    content: {}
+        put:
+            tags:
+                - Funcionário
+            summary: Atualizar um funcionário
+            requestBody:
+                description: Dados necessários para atualizar um funcionário
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/NovaPessoa'
+                required: true
+            parameters:
+                - name: funcionario_id
+                  in: path
+                  description: ID do funcionário
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            responses:
+                '200':
+                    description: successful operation
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RetornoPessoa'
+                '400':
+                    description: Bad request
+                    content: {}
+
+        delete:
+            tags:
+                - Funcionário
+            summary: Exclui um funcionário
+            parameters:
+                - name: funcionario_id
+                  in: path
+                  description: ID do funcionário
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            responses:
+                '204':
+                    description: successful operation
+                    content: {}
+                '400':
+                    description: Bad request
+                    content: {}
+    /funcionario/{funcionario_id}/dependente/:
+        post:
+            tags:
+                - Funcionário Dependentes
+            summary: Criar novo dependente do funcionário
+            parameters:
+                - name: funcionario_id
+                  in: path
+                  description: ID do funcionário
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            requestBody:
+                description: Dados necessários para criar um dependente
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ArrayPessoas'
+                required: true
+            responses:
+                '201':
+                    description: successful operation
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ArrayPessoas'
+                '400':
+                    description: Bad request
+                    content: {}
+        get:
+            tags:
+                - Funcionário Dependentes
+            summary: Busca todos os dependentes do funcionário
+            parameters:
+                - name: funcionario_id
+                  in: path
+                  description: ID do funcionário
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            responses:
+                '200':
+                    description: successful operation
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ArrayPessoas'
+                '400':
+                    description: Bad request
+                    content: {}
+
+    /funcionario/{funcionario_id}/dependente/{dependente_id}:
+        get:
+            tags:
+                - Funcionário Dependentes
+            summary: Busca apenas um dependente do funcionário
+            parameters:
+                - name: funcionario_id
+                  in: path
+                  description: ID do funcionário
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+                - name: dependente_id
+                  in: path
+                  description: ID do dependente
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            responses:
+                '200':
+                    description: successful operation
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RetornoPessoa'
+                '400':
+                    description: Bad request
+                    content: {}
+        put:
+            tags:
+                - Funcionário Dependentes
+            summary: Atualizar um dependente do funcionário
+            requestBody:
+                description: Dados necessários para atualizar o dependente
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/NovaPessoa'
+                required: true
+            parameters:
+                - name: funcionario_id
+                  in: path
+                  description: ID do funcionário
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+                - name: dependente_id
+                  in: path
+                  description: ID do dependente
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            responses:
+                '200':
+                    description: successful operation
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RetornoPessoa'
+                '400':
+                    description: Bad request
+                    content: {}
+
+        delete:
+            tags:
+                - Funcionário Dependentes
+            summary: Exclui um dependente do funcionário
+            parameters:
+                - name: funcionario_id
+                  in: path
+                  description: ID do funcionário
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+                - name: dependente_id
+                  in: path
+                  description: ID do dependente
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            responses:
+                '204':
+                    description: successful operation
+                    content: {}
+                '400':
+                    description: Bad request
+                    content: {}
+components:
+    schemas:
+        NovaPessoa:
+            required:
+                - nome
+            type: object
+            properties:
+                nome:
+                    type: string
+        RetornoPessoa:
+            properties:
+                data:
+                    properties:
+                        nome:
+                            type: string
+        ArrayPessoas:
+            type: array
+            items:
+                type: object
+                properties:
+                    nome:
+                        type: string
+        PessoasPaginado:
+            type: object
+            properties:
+                data:
+                    type: array
+                    items:
+                        type: object
+                        properties:
+                            nome:
+                                type: string
+                links:
+                    properties:
+                        first:
+                            type: string
+                        last:
+                            type: string
+                        prev:
+                            type: string
+                        next:
+                            type: string
+                meta:
+                    properties:
+                        current_page:
+                            type: integer
+                        from:
+                            type: integer
+                        last_page:
+                            type: integer
+                        path:
+                            type: string
+                        per_page:
+                            type: integer
+                        to:
+                            type: integer
+                        total:
+                            type: integer
