@@ -11,6 +11,7 @@
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.6",
+        "darkaonline/swagger-lume": "5.6.*",
         "doctrine/dbal": " ~2.3",
         "fzaninotto/faker": "^1.4",
         "mockery/mockery": "^1.0",

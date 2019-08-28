@@ -21,10 +21,14 @@ $app = new Laravel\Lumen\Application(
     dirname(__DIR__)
 );
 
+$app->instance('path.storage', app()->basePath() . DIRECTORY_SEPARATOR . 'storage');
+$app->instance('path.config', app()->basePath() . DIRECTORY_SEPARATOR . 'config');
+
  $app->withFacades();
 
  $app->withEloquent();
 
+$app->configure('swagger-lume');
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings

@@ -9,7 +9,7 @@ externalDocs:
     description: Find out more about Swagger
     url: 'http://swagger.io'
 servers:
-    - url: 'http://localhost:8000/api'
+    - url: 'http://localhost:8000/v1'
 tags:
     - name: Funcionário
       description: métodos disponíveis para manutenção do funcionário
