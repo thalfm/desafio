@@ -6,7 +6,7 @@
  * Time: 00:50
  */
 
-class FuncionarioControllerTest extends TestCase
+class FuncionarioDependenteControllerTest extends TestCase
 {
     use \Laravel\Lumen\Testing\DatabaseTransactions;
 
@@ -38,7 +38,7 @@ class FuncionarioControllerTest extends TestCase
 
     public function testStore()
     {
-        $response = $this->post('/v1/funcionario/2/dependente', [['nome' => 'Teste']]);
+        $response = $this->post('/v1/funcionario/2/dependente', ['nome' => 'Teste']);
 
         $response->assertResponseStatus(201);
     }
