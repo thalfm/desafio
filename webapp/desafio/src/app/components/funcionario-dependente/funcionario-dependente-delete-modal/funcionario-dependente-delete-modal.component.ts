@@ -3,6 +3,7 @@ import {ModalComponent} from "../../bootstrap/modal/modal.component";
 import {HttpErrorResponse} from "@angular/common/http";
 import {FuncionarioDependente} from "../../../models/FuncionarioDependente";
 import {FuncionarioDependenteHttpService} from "../../../services/http/funcionario-dependente-http.service";
+import {BlockUI, NgBlockUI} from "ng-block-ui";
 
 @Component({
   selector: 'app-funcionario-dependente-delete-modal',
@@ -10,6 +11,7 @@ import {FuncionarioDependenteHttpService} from "../../../services/http/funcionar
   styleUrls: ['./funcionario-dependente-delete-modal.component.css']
 })
 export class FuncionarioDependenteDeleteModalComponent implements OnInit {
+  @BlockUI() blockUI: NgBlockUI;
 
   @ViewChild(ModalComponent) modal: ModalComponent;
 
@@ -44,10 +46,13 @@ export class FuncionarioDependenteDeleteModalComponent implements OnInit {
     if (!this._funcionarioDependenteId) {
       return;
     }
-
+    this.blockUI.start('Carregando');
     this.funcionarioDependenteHttp
         .get(this._funcionarioId, value)
-        .subscribe(funcionarioDependente => this.funcionarioDependente = funcionarioDependente)
+        .subscribe(funcionarioDependente => {
+          this.funcionarioDependente = funcionarioDependente;
+          this.blockUI.stop();
+        })
   }
 
   showModal() {
@@ -55,12 +60,17 @@ export class FuncionarioDependenteDeleteModalComponent implements OnInit {
   }
 
   destroy() {
+    this.blockUI.start('Carregando');
     this.funcionarioDependenteHttp
         .destroy(this._funcionarioId, this._funcionarioDependenteId)
         .subscribe(funcionarioDependente => {
           this.modal.hide();
           this.onSuccess.emit(funcionarioDependente);
-        }, error => this.onError.emit(error))
+          this.blockUI.stop();
+        }, error => {
+          this.onError.emit(error)
+          this.blockUI.stop();
+        });
   }
 
 }

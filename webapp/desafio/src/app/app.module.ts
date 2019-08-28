@@ -15,6 +15,7 @@ import { ModalComponent } from './components/bootstrap/modal/modal.component';
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {NgxPaginationModule} from "ngx-pagination";
+import {BlockUIModule} from "ng-block-ui";
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import {NgxPaginationModule} from "ngx-pagination";
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    BlockUIModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

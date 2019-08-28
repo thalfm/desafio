@@ -3,6 +3,7 @@ import {ModalComponent} from "../../bootstrap/modal/modal.component";
 import {HttpErrorResponse} from "@angular/common/http";
 import {FuncionarioDependente} from "../../../models/FuncionarioDependente";
 import {FuncionarioDependenteHttpService} from "../../../services/http/funcionario-dependente-http.service";
+import {BlockUI, NgBlockUI} from "ng-block-ui";
 
 @Component({
   selector: 'app-funcionario-dependente-edit-modal',
@@ -10,6 +11,7 @@ import {FuncionarioDependenteHttpService} from "../../../services/http/funcionar
   styleUrls: ['./funcionario-dependente-edit-modal.component.css']
 })
 export class FuncionarioDependenteEditModalComponent {
+  @BlockUI() blockUI: NgBlockUI;
 
   @ViewChild(ModalComponent) modal: ModalComponent;
 
@@ -43,10 +45,13 @@ export class FuncionarioDependenteEditModalComponent {
     if (!this._funcionarioDependenteId) {
       return;
     }
-
+    this.blockUI.start('Carregando');
     this.funcionarioDependenteHttp
         .get(this._funcionarioId, value)
-        .subscribe(dependente => this.dependente = dependente)
+        .subscribe(dependente => {
+          this.dependente = dependente;
+          this.blockUI.stop();
+        })
   }
 
   showModal() {
@@ -54,11 +59,16 @@ export class FuncionarioDependenteEditModalComponent {
   }
 
   submit() {
+    this.blockUI.start('Carregando');
     this.funcionarioDependenteHttp
         .update(this._funcionarioId, this._funcionarioDependenteId, this.dependente)
         .subscribe(dependente => {
           this.modal.hide();
           this.onSuccess.emit(dependente);
-        }, error => this.onError.emit(error))
+          this.blockUI.stop();
+        }, error => {
+          this.onError.emit(error);
+          this.blockUI.stop();
+        })
   }
 }

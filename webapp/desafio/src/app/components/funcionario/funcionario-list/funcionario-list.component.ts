@@ -7,6 +7,7 @@ import {FuncionarioEditModalComponent} from "../funcionario-edit-modal/funcionar
 import {FuncionarioDeleteModalComponent} from "../funcionario-delete-modal/funcionario-delete-modal.component";
 import {Funcionario} from "../../../models/funcionario";
 import {FuncionarioHttpService} from "../../../services/http/funcionario-http.service";
+import {BlockUI, NgBlockUI} from "ng-block-ui";
 
 @Component({
     selector: 'app-funcionario-list',
@@ -14,6 +15,8 @@ import {FuncionarioHttpService} from "../../../services/http/funcionario-http.se
     styleUrls: ['./funcionario-list.component.css']
 })
 export class FuncionarioListComponent implements OnInit {
+
+    @BlockUI() blockUI: NgBlockUI;
 
     funcionarios: Array<Funcionario> = [];
 
@@ -48,11 +51,13 @@ export class FuncionarioListComponent implements OnInit {
     }
 
     all() {
+        this.blockUI.start('Carregando');
         this.funcionarioHttp.list(this.pagination.page)
             .subscribe(response => {
                 this.funcionarios = response.data;
                 this.pagination.totalItems = response.meta.total;
                 this.pagination.itemsPerPage = response.meta.per_page;
+                this.blockUI.stop();
             })
     }
 

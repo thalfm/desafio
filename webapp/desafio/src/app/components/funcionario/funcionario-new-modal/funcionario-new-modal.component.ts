@@ -3,6 +3,7 @@ import {ModalComponent} from "../../bootstrap/modal/modal.component";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Funcionario} from "../../../models/funcionario";
 import {FuncionarioHttpService} from "../../../services/http/funcionario-http.service";
+import {BlockUI, NgBlockUI} from "ng-block-ui";
 
 @Component({
     selector: 'app-funcionario-new-modal',
@@ -10,6 +11,7 @@ import {FuncionarioHttpService} from "../../../services/http/funcionario-http.se
     styleUrls: ['./funcionario-new-modal.component.css']
 })
 export class FuncionarioNewModalComponent implements OnInit {
+    @BlockUI() blockUI: NgBlockUI;
 
     @ViewChild(ModalComponent) modal: ModalComponent;
 
@@ -28,12 +30,17 @@ export class FuncionarioNewModalComponent implements OnInit {
     }
 
     submit() {
+        this.blockUI.start('Carregando');
         this.funcionarioHttp
             .create(this.funcionario)
             .subscribe(funcionario => {
                 this.modal.hide();
                 this.onSuccess.emit(funcionario);
-            }, error => this.onError.emit(error))
+                this.blockUI.stop();
+            }, error => {
+                this.onError.emit(error);
+                this.blockUI.stop();
+            })
     }
 
     showModal() {

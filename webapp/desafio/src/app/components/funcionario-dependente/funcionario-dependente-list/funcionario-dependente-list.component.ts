@@ -8,6 +8,7 @@ import {FuncionarioDependenteListEditService} from "./funcionario-dependente-lis
 import {FuncionarioDependenteNewModalComponent} from "../funcionario-dependente-new-modal/funcionario-dependente-new-modal.component";
 import {FuncionarioDependenteEditModalComponent} from "../funcionario-dependente-edit-modal/funcionario-dependente-edit-modal.component";
 import {FuncionarioDependenteDeleteModalComponent} from "../funcionario-dependente-delete-modal/funcionario-dependente-delete-modal.component";
+import {BlockUI, NgBlockUI} from "ng-block-ui";
 
 @Component({
     selector: 'app-funcionario-dependente-list',
@@ -15,6 +16,7 @@ import {FuncionarioDependenteDeleteModalComponent} from "../funcionario-dependen
     styleUrls: ['./funcionario-dependente-list.component.css']
 })
 export class FuncionarioDependenteListComponent implements OnInit {
+    @BlockUI() blockUI: NgBlockUI;
 
     funcionarios: Funcionario = {
         nome: '',
@@ -49,9 +51,11 @@ export class FuncionarioDependenteListComponent implements OnInit {
     }
 
     all() {
+        this.blockUI.start('Carregando');
         this.funcionarioDependenteHtpp.list(this.funcionarioId)
             .subscribe(response => {
                 this.funcionarios = response.data;
+                this.blockUI.stop();
             })
     }
 
