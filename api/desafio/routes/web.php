@@ -16,19 +16,21 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->group(['prefix' => 'v1'], function () use($router){
-    $router->group(['prefix' => 'funcionario', 'middleware' => 'cors'], function () use($router){
-        $router->get('/', 'FuncionarioController@index');
-        $router->get('/{funcionario_id}', 'FuncionarioController@show');
-        $router->post('/', 'FuncionarioController@store');
-        $router->put('/{funcionario_id}', 'FuncionarioController@update');
-        $router->delete('/{funcionario_id}', 'FuncionarioController@delete');
+$router->group(['prefix' => 'v1'], function () use ($router) {
+    $router->group(['prefix' => 'funcionario'], function () use ($router) {
+        $router->group(['middleware' => 'cors'], function () use ($router) {
+            $router->get('/', 'FuncionarioController@index');
+            $router->get('/{funcionario_id}', 'FuncionarioController@show');
+            $router->post('/', 'FuncionarioController@store');
+            $router->put('/{funcionario_id}', 'FuncionarioController@update');
+            $router->delete('/{funcionario_id}', 'FuncionarioController@delete');
 
-        $router->get('{funcionario_id}/dependente', 'FuncionarioDependentesController@index');
-        $router->get('/{funcionario_id}/dependente/{dependente_id}', 'FuncionarioDependentesController@show');
-        $router->post('/{funcionario_id}/dependente', 'FuncionarioDependentesController@store');
-        $router->put('/{funcionario_id}/dependente/{dependente_id}', 'FuncionarioDependentesController@update');
-        $router->delete('/{funcionario_id}/dependente/{dependente_id}', 'FuncionarioDependentesController@delete');
+            $router->get('{funcionario_id}/dependente', 'FuncionarioDependentesController@index');
+            $router->get('/{funcionario_id}/dependente/{dependente_id}', 'FuncionarioDependentesController@show');
+            $router->post('/{funcionario_id}/dependente', 'FuncionarioDependentesController@store');
+            $router->put('/{funcionario_id}/dependente/{dependente_id}', 'FuncionarioDependentesController@update');
+            $router->delete('/{funcionario_id}/dependente/{dependente_id}', 'FuncionarioDependentesController@delete');
+        });
     });
 
 });
