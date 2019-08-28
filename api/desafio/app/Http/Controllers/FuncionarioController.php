@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Http\Resources\FuncionarioResource;
 use App\Models\Funcionario;
 use Illuminate\Http\Request;
 
@@ -17,9 +18,9 @@ class FuncionarioController extends Controller
 
     public function index()
     {
-        $data = Funcionario::all();
+        $data = Funcionario::paginate(10);
         return $data
-            ? response()->json(['data' => $data], 200)
+            ? FuncionarioResource::collection($data)
             : response()->json(['msg' => 'Nenhum conteúdo encontrado'], 404);
     }
 
@@ -27,7 +28,7 @@ class FuncionarioController extends Controller
     {
         $data = Funcionario::find($funcionario_id);
         return $data
-            ? response()->json(['data' =>$data], 200)
+            ? new FuncionarioResource($data)
             : response()->json(['msg' => 'Nenhum conteúdo encontrado'], 404);
     }
 

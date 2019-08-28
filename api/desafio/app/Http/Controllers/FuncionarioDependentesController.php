@@ -9,6 +9,8 @@
 namespace App\Http\Controllers;
 
 
+use App\Http\Resources\FuncionarioDependenteResource;
+use App\Http\Resources\FuncionarioResource;
 use App\Models\Funcionario;
 use Illuminate\Http\Request;
 
@@ -18,10 +20,7 @@ class FuncionarioDependentesController extends Controller
     public function index($funcionario_id)
     {
         $funcionario = Funcionario::find($funcionario_id);
-        $dependentes = $funcionario->dependentes;
-        return $dependentes
-            ? response()->json(['data' => $dependentes], 200)
-            : response()->json(['msg' => 'Nenhum conteúdo encontrado'], 404);
+        return  new FuncionarioResource($funcionario);
     }
 
     public function show(int $funcionario_id, int $dependente_id)
@@ -29,7 +28,7 @@ class FuncionarioDependentesController extends Controller
         $funcionario = Funcionario::find($funcionario_id);
         $dependente = $funcionario->dependentes()->find($dependente_id);
         return $dependente
-            ? response()->json(['data' => $dependente], 200)
+            ? new FuncionarioDependenteResource($dependente)
             : response()->json(['msg' => 'Nenhum conteúdo encontrado'], 404);
     }
 

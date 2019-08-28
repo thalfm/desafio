@@ -32,4 +32,9 @@ class FuncionarioDependente extends Model
 
     public $timestamps = false;
 
+    public function funcionario()
+    {
+        return $this->belongsTo(Funcionario::class, 'funcionario_id', 'funcionario_id');
+    }
+
 }
