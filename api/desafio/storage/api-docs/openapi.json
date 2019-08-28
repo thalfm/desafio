@@ -51,7 +51,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/RetornoPessoa"
+                                    "$ref": "#/components/schemas/RetornoPessoaSemDependente"
                                 }
                             }
                         }
@@ -154,7 +154,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/RetornoPessoa"
+                                    "$ref": "#/components/schemas/RetornoPessoaSemDependente"
                                 }
                             }
                         }
@@ -263,7 +263,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ArrayPessoas"
+                                    "$ref": "#/components/schemas/RetornoPessoa"
                                 }
                             }
                         }
@@ -309,7 +309,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/RetornoPessoa"
+                                    "$ref": "#/components/schemas/SimplesPessoa"
                                 }
                             }
                         }
@@ -364,7 +364,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/RetornoPessoa"
+                                    "$ref": "#/components/schemas/SimplesPessoa"
                                 }
                             }
                         }
@@ -431,8 +431,53 @@
             "RetornoPessoa": {
                 "properties": {
                     "data": {
+                        "type": "object",
                         "properties": {
                             "nome": {
+                                "type": "string"
+                            },
+                            "created_at": {
+                                "type": "string"
+                            },
+                            "updated_at": {
+                                "type": "string"
+                            },
+                            "deleted_at": {
+                                "type": "string"
+                            },
+                            "dependentes": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "funcionario_dependentes_id": {
+                                            "type": "integer"
+                                        },
+                                        "nome": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "RetornoPessoaSemDependente": {
+                "properties": {
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "nome": {
+                                "type": "string"
+                            },
+                            "created_at": {
+                                "type": "string"
+                            },
+                            "updated_at": {
+                                "type": "string"
+                            },
+                            "deleted_at": {
                                 "type": "string"
                             }
                         }
@@ -442,10 +487,36 @@
             "ArrayPessoas": {
                 "type": "array",
                 "items": {
-                    "type": "object",
                     "properties": {
-                        "nome": {
-                            "type": "string"
+                        "data": {
+                            "type": "object",
+                            "properties": {
+                                "funcionario_dependentes_id": {
+                                    "type": "integer"
+                                },
+                                "funcionario_id": {
+                                    "type": "integer"
+                                },
+                                "nome": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "SimplesPessoa": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "funcionario_dependentes_id": {
+                                "type": "integer"
+                            },
+                            "nome": {
+                                "type": "string"
+                            }
                         }
                     }
                 }
@@ -460,6 +531,29 @@
                             "properties": {
                                 "nome": {
                                     "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "string"
+                                },
+                                "updated_at": {
+                                    "type": "string"
+                                },
+                                "deleted_at": {
+                                    "type": "string"
+                                },
+                                "dependentes": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "funcionario_dependentes_id": {
+                                                "type": "integer"
+                                            },
+                                            "nome": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }

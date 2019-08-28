@@ -34,7 +34,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/RetornoPessoa'
+                                $ref: '#/components/schemas/RetornoPessoaSemDependente'
                 '400':
                     description: Bad request
                     content: {}
@@ -101,7 +101,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/RetornoPessoa'
+                                $ref: '#/components/schemas/RetornoPessoaSemDependente'
                 '400':
                     description: Bad request
                     content: {}
@@ -173,7 +173,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/ArrayPessoas'
+                                $ref: '#/components/schemas/RetornoPessoa'
                 '400':
                     description: Bad request
                     content: {}
@@ -204,7 +204,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/RetornoPessoa'
+                                $ref: '#/components/schemas/SimplesPessoa'
                 '400':
                     description: Bad request
                     content: {}
@@ -240,7 +240,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/RetornoPessoa'
+                                $ref: '#/components/schemas/SimplesPessoa'
                 '400':
                     description: Bad request
                     content: {}
@@ -280,19 +280,65 @@ components:
             properties:
                 nome:
                     type: string
+
         RetornoPessoa:
             properties:
                 data:
+                    type: object
                     properties:
                         nome:
+                            type: string
+                        created_at:
+                            type: string
+                        updated_at:
+                            type: string
+                        deleted_at:
+                            type: string
+                        dependentes:
+                            type: array
+                            items:
+                                type: object
+                                properties:
+                                    funcionario_dependentes_id:
+                                        type: integer
+                                    nome:
+                                        type: string
+        RetornoPessoaSemDependente:
+            properties:
+                data:
+                    type: object
+                    properties:
+                        nome:
+                            type: string
+                        created_at:
+                            type: string
+                        updated_at:
+                            type: string
+                        deleted_at:
                             type: string
         ArrayPessoas:
             type: array
             items:
-                type: object
                 properties:
-                    nome:
-                        type: string
+                    data:
+                        type: object
+                        properties:
+                            funcionario_dependentes_id:
+                                type: integer
+                            funcionario_id:
+                                type: integer
+                            nome:
+                                type: string
+        SimplesPessoa:
+            type: object
+            properties:
+                data:
+                    type: object
+                    properties:
+                        funcionario_dependentes_id:
+                            type: integer
+                        nome:
+                            type: string
         PessoasPaginado:
             type: object
             properties:
@@ -303,6 +349,21 @@ components:
                         properties:
                             nome:
                                 type: string
+                            created_at:
+                                type: string
+                            updated_at:
+                                type: string
+                            deleted_at:
+                                type: string
+                            dependentes:
+                                type: array
+                                items:
+                                    type: object
+                                    properties:
+                                        funcionario_dependentes_id:
+                                            type: integer
+                                        nome:
+                                            type: string
                 links:
                     properties:
                         first:
