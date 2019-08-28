@@ -17,7 +17,7 @@ $router->get('/', function () use ($router) {
 });
 
 $router->group(['prefix' => 'v1'], function () use($router){
-    $router->group(['prefix' => 'funcionario'], function () use($router){
+    $router->group(['prefix' => 'funcionario', 'middleware' => 'cors'], function () use($router){
         $router->get('/', 'FuncionarioController@index');
         $router->get('/{funcionario_id}', 'FuncionarioController@show');
         $router->post('/', 'FuncionarioController@store');
