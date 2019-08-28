@@ -37,16 +37,16 @@ class FuncionarioDependentesController extends Controller
         $input = $request->all();
 
         $rules = [
-            '*.nome' => 'required|unique:tb_funcionario_dependentes'
+            'nome' => 'required|unique:tb_funcionario_dependentes'
         ];
         $messages = [
-            '*.nome.required' => 'Informe um nome do dependente',
-            '*.nome.unique' => 'Já existe um dependente com esse nome'
+            'nome.required' => 'Informe um nome do dependente',
+            'nome.unique' => 'Já existe um dependente com esse nome'
         ];
         $validator = \Validator::make($input, $rules, $messages);
         if (!$validator->fails()) {
             $funcionario = Funcionario::find($funcionario_id);
-            $funcionario->dependentes()->createMany($request->all());
+            $funcionario->dependentes()->create($request->all());
             return response()->json(['data' => $funcionario->dependentes], 201);
         }
 

@@ -1,3 +1,15 @@
-<p>
-  funcionario-new-modal works!
-</p>
+<form (submit)="submit()">
+  <app-modal>
+    <h3 modal-title>Novo funcionário</h3>
+    <div modal-body>
+
+      <div class="form-group">
+        <label for="product-name">Nome</label>
+        <input type="text" class="form-control" id="product-name" [(ngModel)]="funcionario.nome" name="name" required>
+      </div>
+    </div>
+    <div modal-footer>
+      <button type="submit" class="btn btn-primary">Salvar</button>
+    </div>
+  </app-modal>
+</form>

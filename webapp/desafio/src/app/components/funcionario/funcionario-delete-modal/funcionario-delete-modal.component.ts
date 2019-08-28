@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {ModalComponent} from "../../bootstrap/modal/modal.component";
+import {HttpErrorResponse} from "@angular/common/http";
+import {Funcionario} from "../../../models/Funcionario";
+import {FuncionarioHttpService} from "../../../services/http/funcionario-http.service";
 
 @Component({
   selector: 'app-funcionario-delete-modal',
@@ -7,9 +11,44 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FuncionarioDeleteModalComponent implements OnInit {
 
-  constructor() { }
+  @ViewChild(ModalComponent) modal: ModalComponent;
+
+  @Output() onSuccess: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output() onError: EventEmitter<HttpErrorResponse> = new EventEmitter<HttpErrorResponse>();
+
+  _funcionarioId: number;
+
+  funcionario: Funcionario = null;
+
+  constructor(private funcionarioHttp: FuncionarioHttpService) { }
 
   ngOnInit() {
   }
 
+  @Input()
+  set funcionarioId(value: number) {
+    this._funcionarioId = value;
+
+    if (!this._funcionarioId) {
+      return;
+    }
+
+    this.funcionarioHttp
+        .get(value)
+        .subscribe(funcionario => this.funcionario = funcionario)
+  }
+
+  showModal() {
+    this.modal.show();
+  }
+
+  destroy() {
+    this.funcionarioHttp
+        .destroy(this._funcionarioId)
+        .subscribe(funcionario => {
+          this.modal.hide();
+          this.onSuccess.emit(funcionario);
+        }, error => this.onError.emit(error))
+  }
 }

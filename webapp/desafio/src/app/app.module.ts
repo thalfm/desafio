@@ -12,6 +12,9 @@ import { FuncionarioDependenteNewModalComponent } from './components/funcionario
 import { FuncionarioDependenteEditModalComponent } from './components/funcionario-dependente/funcionario-dependente-edit-modal/funcionario-dependente-edit-modal.component';
 import { FuncionarioDependenteDeleteModalComponent } from './components/funcionario-dependente/funcionario-dependente-delete-modal/funcionario-dependente-delete-modal.component';
 import { ModalComponent } from './components/bootstrap/modal/modal.component';
+import {FormsModule} from "@angular/forms";
+import {HttpClientModule} from "@angular/common/http";
+import {NgxPaginationModule} from "ngx-pagination";
 
 @NgModule({
   declarations: [
@@ -28,7 +31,10 @@ import { ModalComponent } from './components/bootstrap/modal/modal.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

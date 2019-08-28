@@ -1,3 +1,12 @@
-<p>
-  funcionario-dependente-delete-modal works!
-</p>
+<form (submit)="submit()">
+  <app-modal>
+    <h3 modal-title>Exclusão de funcionário</h3>
+    <div modal-body>
+      Deseja realmente excluir o dependente {{funcionarioDependente?.nome}}
+    </div>
+    <div modal-footer>
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+      <button type="button" class="btn btn-danger" (click)="destroy()">Exluir</button>
+    </div>
+  </app-modal>
+</form>

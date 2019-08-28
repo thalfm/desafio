@@ -1,3 +1,57 @@
-<p>
-  funcionario-list works!
-</p>
+<div class="row">
+  <h1>Listagem de funcionários</h1>
+  <table class="table">
+    <thead>
+    <tr>
+      <td colspan="5">
+        <button class="btn btn-primary" (click)="funcionarioListInsertService.showModalInsert()">Novo funcionário</button>
+      </td>
+    </tr>
+    <tr>
+      <th style="width: 5%">ID</th>
+      <th style="width: 65%">Nome</th>
+      <th style="width: 10%">Criado em</th>
+      <th style="width: 20%">Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let funcionario of funcionarios | paginate: {itemsPerPage:pagination.itemsPerPage, currentPage: pagination.page, totalItems: pagination.totalItems}">
+      <td>{{funcionario.funcionario_id}}</td>
+      <td>{{funcionario.nome}}</td>
+      <td>{{funcionario.created_at | date:"dd/mm/yyyy"}}</td>
+      <td>
+        <a href="javascript:void(0)" (click)="funcionarioListEditService.showModalEdit(funcionario.funcionario_id)">
+          <i class="fas fa-edit" title="Editar"></i>
+        </a> |
+        <a href="javascript:void(0)" (click)="funcionarioListDeleteService.showModalDelete(funcionario.funcionario_id)">
+          <i class="fas fa-trash-alt" title="Exluir"></i>
+        </a> |
+        <a [routerLink]="['/funcionario', funcionario.funcionario_id, 'dependente']">
+          <i class="fas fa-list" title="Dependentes"></i>
+        </a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <pagination-controls
+          (pageChange)="pageChanged($event)"
+          previousLabel="Anterior"
+          nextLabel="Próximo"
+  ></pagination-controls>
+</div>
+<app-funcionario-new-modal
+        (onSuccess)="funcionarioListInsertService.onSuccesInsert()"
+        (onError)="funcionarioListInsertService.onErrorInsert($event)"
+></app-funcionario-new-modal>
+
+<app-funcionario-edit-modal
+        [funcionarioId]="funcionarioId"
+        (onSuccess)="funcionarioListEditService.onSuccesEdit()"
+        (onError)="funcionarioListEditService.onErrorEdit($event)"
+></app-funcionario-edit-modal>
+
+<app-funcionario-delete-modal
+        [funcionarioId]="funcionarioId"
+        (onSuccess)="funcionarioListDeleteService.onSuccesDelete()"
+        (onError)="funcionarioListDeleteService.onErrorDelete($event)"
+></app-funcionario-delete-modal>

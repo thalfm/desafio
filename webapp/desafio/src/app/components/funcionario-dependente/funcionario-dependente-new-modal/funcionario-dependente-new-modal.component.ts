@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {ModalComponent} from "../../bootstrap/modal/modal.component";
+import {HttpErrorResponse} from "@angular/common/http";
+import {FuncionarioDependente} from "../../../models/FuncionarioDependente";
+import {FuncionarioDependenteHttpService} from "../../../services/http/funcionario-dependente-http.service";
 
 @Component({
   selector: 'app-funcionario-dependente-new-modal',
@@ -7,9 +11,38 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FuncionarioDependenteNewModalComponent implements OnInit {
 
-  constructor() { }
+  @ViewChild(ModalComponent) modal: ModalComponent;
+
+  @Output() onSuccess: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output() onError: EventEmitter<HttpErrorResponse> = new EventEmitter<HttpErrorResponse>();
+
+  _funcionarioId: number;
+
+  funcionarioDependente: FuncionarioDependente = {
+    nome: ''
+  };
+
+  constructor(private funcionarioDependenteHttp: FuncionarioDependenteHttpService) { }
 
   ngOnInit() {
   }
 
+  @Input()
+  set funcionarioId(value: number) {
+    this._funcionarioId = value;
+  }
+
+  showModal() {
+    this.modal.show();
+  }
+
+  submit() {
+    this.funcionarioDependenteHttp
+        .create(this._funcionarioId, this.funcionarioDependente)
+        .subscribe(funcionario => {
+          this.modal.hide();
+          this.onSuccess.emit(funcionario);
+        }, error => this.onError.emit(error))
+  }
 }

@@ -1,3 +1,47 @@
-<p>
-  funcionario-dependente-list works!
-</p>
+<div class="row">
+  <h1>Listagem de dependentes do funcionário {{funcionarios.nome}}</h1>
+  <table class="table">
+    <thead>
+    <tr>
+      <td colspan="5">
+        <button class="btn btn-primary" (click)="funcionarioDependenteListInsertService.showModalInsert(funcionarios.funcionario_id)">Novo dependente</button>
+      </td>
+    </tr>
+    <tr>
+      <th style="width: 5%">ID</th>
+      <th style="width: 65%">Nome</th>
+      <th style="width: 20%">Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let dependente of funcionarios.dependentes">
+      <td>{{dependente.funcionario_dependentes_id}}</td>
+      <td>{{dependente.nome}}</td>
+      <td>
+        <a href="javascript:void(0)" (click)="funcionarioDependenteListEditService.showModalEdit(funcionarios.funcionario_id, dependente.funcionario_dependentes_id)">
+          <i class="fas fa-edit" title="Editar"></i>
+        </a> |
+        <a href="javascript:void(0)" (click)="funcionarioDependenteListDeleteService.showModalDelete(funcionarios.funcionario_id, dependente.funcionario_dependentes_id)">
+          <i class="fas fa-trash-alt" title="Excluir"></i>
+        </a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<app-funcionario-dependente-new-modal
+        (onSuccess)="funcionarioDependenteListInsertService.onSuccesInsert()"
+        (onError)="funcionarioDependenteListInsertService.onErrorInsert($event)"
+></app-funcionario-dependente-new-modal>
+
+<app-funcionario-dependente-edit-modal
+        [funcionarioId]="funcionarioId"
+        (onSuccess)="funcionarioDependenteListEditService.onSuccesEdit()"
+        (onError)="funcionarioDependenteListEditService.onErrorEdit($event)"
+></app-funcionario-dependente-edit-modal>
+
+<app-funcionario-dependente-delete-modal
+        [funcionarioId]="funcionarioId"
+        (onSuccess)="funcionarioDependenteListDeleteService.onSuccesDelete()"
+        (onError)="funcionarioDependenteListDeleteService.onErrorDelete($event)"
+></app-funcionario-dependente-delete-modal>
