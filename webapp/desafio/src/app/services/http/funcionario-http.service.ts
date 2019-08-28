@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BaseHttpService} from "./base-http.service";
-import {Funcionario} from "../../models/funcionario";
+import {Funcionario} from "../../models/Funcionario";
 import {Observable} from "rxjs";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {map} from "rxjs/operators";

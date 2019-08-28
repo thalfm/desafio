@@ -5,7 +5,7 @@ import {FuncionarioListEditService} from "./funcionario-list-edit.service";
 import {FuncionarioListDeleteService} from "./funcionario-list-delete.service";
 import {FuncionarioEditModalComponent} from "../funcionario-edit-modal/funcionario-edit-modal.component";
 import {FuncionarioDeleteModalComponent} from "../funcionario-delete-modal/funcionario-delete-modal.component";
-import {Funcionario} from "../../../models/funcionario";
+import {Funcionario} from "../../../models/Funcionario";
 import {FuncionarioHttpService} from "../../../services/http/funcionario-http.service";
 import {BlockUI, NgBlockUI} from "ng-block-ui";
 

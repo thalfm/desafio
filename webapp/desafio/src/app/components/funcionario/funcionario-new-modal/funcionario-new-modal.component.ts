@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {ModalComponent} from "../../bootstrap/modal/modal.component";
 import {HttpErrorResponse} from "@angular/common/http";
-import {Funcionario} from "../../../models/funcionario";
+import {Funcionario} from "../../../models/Funcionario";
 import {FuncionarioHttpService} from "../../../services/http/funcionario-http.service";
 import {BlockUI, NgBlockUI} from "ng-block-ui";
 
