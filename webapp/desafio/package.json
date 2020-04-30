@@ -22,7 +22,7 @@
     "@fortawesome/fontawesome-free": "^5.8.1",
     "bootstrap": "^4.3.1",
     "core-js": "^2.5.4",
-    "jquery": "^3.4.0",
+    "jquery": "^3.5.0",
     "ng-block-ui": "^2.1.7",
     "ngx-pagination": "^3.2.1",
     "pace": "github:HubSpot/pace#v1.0.2",
